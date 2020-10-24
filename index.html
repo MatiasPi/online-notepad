@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online Notepad</title>
+    <style>
+        html,body{
+            margin:0;
+        }
+        body{
+            background-color: #5879ab;
+        }
+        #ta{
+            margin: auto;
+            margin-top: 20px;
+            width:100%;
+            max-width: 1300px;
+            min-height: calc(100vh - 20px);
+            cursor: default;
+            font-family: "Noto Sans CJK JP";
+            font-size: 33px;
+            color : rgba(255,255,255,0.92);
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div contenteditable="true" name="" id="ta"></textarea>    
+    <script>
+        var ta = document.getElementById("ta");
+        ta.innerHTML = localStorage.getItem("taContent")
+        ta.addEventListener("input", function() {
+            localStorage.setItem("taContent",this.innerHTML)
+        })
+        ta.addEventListener("paste", function(e) {
+            e.preventDefault();
+            var text = e.clipboardData.getData("text/plain");
+            text = text.replace(/\n/g,"<br>")
+            document.execCommand("insertHTML", false, text);
+        });
+    </script>
+</body>
+</html>
